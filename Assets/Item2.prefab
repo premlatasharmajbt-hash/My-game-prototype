@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8823720264593060668}
   - component: {fileID: 8852305517571483052}
-  - component: {fileID: 5147297088988495450}
   - component: {fileID: 2233819819551423167}
   - component: {fileID: 868668732127852197}
+  - component: {fileID: 8562387408509792385}
   m_Layer: 0
   m_Name: Item2
   m_TagString: Untagged
@@ -94,30 +94,6 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
---- !u!114 &5147297088988495450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3395340460080221011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1100a02b933b3c240b4ab5f0d2917382, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDrag
-  Dropbox1: {fileID: 0}
-  Dropbox2: {fileID: 0}
-  Dropbox3: {fileID: 0}
-  Dropbox4: {fileID: 0}
-  Dropbox: {fileID: 0}
-  touchingDropBox: 0
-  touchingDropBox1: 0
-  touchingDropBox2: 0
-  touchingDropBox3: 0
-  touchingDropBox4: 0
-  timetosee: 10
-  notagain: 0
 --- !u!50 &2233819819551423167
 Rigidbody2D:
   serializedVersion: 5
@@ -191,3 +167,26 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8562387408509792385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3395340460080221011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b2972060b221a44996b22e916dbc256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDrag1
+  Dropbox1: {fileID: 0}
+  Dropbox2: {fileID: 0}
+  Dropbox3: {fileID: 0}
+  Dropbox4: {fileID: 0}
+  Dropbox: {fileID: 0}
+  touchingDropBox: 0
+  touchingDropBox1: 0
+  touchingDropBox2: 0
+  touchingDropBox3: 0
+  touchingDropBox4: 0
+  timetosee: 10

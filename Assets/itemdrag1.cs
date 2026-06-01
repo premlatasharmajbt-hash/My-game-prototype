@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ItemDrag : MonoBehaviour
+public class ItemDrag1 : MonoBehaviour
 {
     private static Vector3 originalPosition;
     

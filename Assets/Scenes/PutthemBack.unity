@@ -641,6 +641,26 @@ PrefabInstance:
       propertyPath: Dropbox4
       value: 
       objectReference: {fileID: 1076627257}
+    - target: {fileID: 8562387408509792385, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
+      propertyPath: Dropbox
+      value: 
+      objectReference: {fileID: 541241463}
+    - target: {fileID: 8562387408509792385, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
+      propertyPath: Dropbox1
+      value: 
+      objectReference: {fileID: 84283723}
+    - target: {fileID: 8562387408509792385, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
+      propertyPath: Dropbox2
+      value: 
+      objectReference: {fileID: 812834362}
+    - target: {fileID: 8562387408509792385, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
+      propertyPath: Dropbox3
+      value: 
+      objectReference: {fileID: 981385100}
+    - target: {fileID: 8562387408509792385, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
+      propertyPath: Dropbox4
+      value: 
+      objectReference: {fileID: 1076627257}
     - target: {fileID: 8823720264593060668, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.3306804

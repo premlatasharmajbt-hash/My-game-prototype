@@ -15,7 +15,14 @@ public class YOuwonorlost : MonoBehaviour
       {
         if (ItemDrag.won == true)
         {
-          Text.text = "You won!";
+          if (ItemDrag1.won == true)
+          {
+            Text.text = "You won!";
+          }
+          else
+          {
+            Text.text = "You lost!";
+          }
         }
         else
         {
