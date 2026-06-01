@@ -106,10 +106,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1100a02b933b3c240b4ab5f0d2917382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemDrag
-  currentDropbox: {fileID: 0}
-  isTouchingDropbox: 0
-  timeToSee: 10
-  notAgain: 0
+  Dropbox1: {fileID: 0}
+  Dropbox2: {fileID: 0}
+  Dropbox3: {fileID: 0}
+  Dropbox4: {fileID: 0}
+  Dropbox: {fileID: 0}
+  touchingDropBox: 0
+  touchingDropBox1: 0
+  touchingDropBox2: 0
+  touchingDropBox3: 0
+  touchingDropBox4: 0
+  timetosee: 10
+  notagain: 0
 --- !u!50 &2233819819551423167
 Rigidbody2D:
   serializedVersion: 5

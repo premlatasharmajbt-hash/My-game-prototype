@@ -426,14 +426,6 @@ PrefabInstance:
       propertyPath: Dropbox4
       value: 
       objectReference: {fileID: 1076627257}
-    - target: {fileID: 6287726030742130498, guid: 725fd03543d8c8c4fa1dc53d7d06714e, type: 3}
-      propertyPath: Dropbox5
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6287726030742130498, guid: 725fd03543d8c8c4fa1dc53d7d06714e, type: 3}
-      propertyPath: GameObject
-      value: 
-      objectReference: {fileID: 533412696}
     - target: {fileID: 8823720264593060668, guid: 725fd03543d8c8c4fa1dc53d7d06714e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6
@@ -479,11 +471,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 725fd03543d8c8c4fa1dc53d7d06714e, type: 3}
---- !u!1 &533412696 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3395340460080221011, guid: 725fd03543d8c8c4fa1dc53d7d06714e, type: 3}
-  m_PrefabInstance: {fileID: 533412695}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &541241463
 GameObject:
   m_ObjectHideFlags: 0
@@ -654,10 +641,6 @@ PrefabInstance:
       propertyPath: Dropbox4
       value: 
       objectReference: {fileID: 1076627257}
-    - target: {fileID: 5147297088988495450, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
-      propertyPath: GameObject
-      value: 
-      objectReference: {fileID: 572869232}
     - target: {fileID: 8823720264593060668, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
       propertyPath: m_LocalPosition.x
       value: -4.3306804
@@ -703,11 +686,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
---- !u!1 &572869232 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3395340460080221011, guid: 0bb88d564fa6bd249a48e0ba458581fb, type: 3}
-  m_PrefabInstance: {fileID: 572869231}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
