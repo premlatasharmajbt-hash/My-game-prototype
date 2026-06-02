@@ -4,8 +4,6 @@ using UnityEngine.SceneManagement;
 public class ItemDrag1 : MonoBehaviour
 {
     private static Vector3 originalPosition;
-    
-    // SYSTEM FIX: Changed to static so the script remembers it already saved the position across scenes
     private static bool isPositionSaved = false;
 
     public GameObject Dropbox1;
@@ -13,19 +11,20 @@ public class ItemDrag1 : MonoBehaviour
     public GameObject Dropbox3;
     public GameObject Dropbox4;
     public GameObject Dropbox;
+
     private Vector3 screenPoint;
     private Vector3 offset;
-    
+
     public bool touchingDropBox;
     public bool touchingDropBox1;
     public bool touchingDropBox2;
     public bool touchingDropBox3;
     public bool touchingDropBox4;
+
     public float timetosee = 10f;
-    
-    public static float timer = 0f; 
+    public static float timer = 0f;
     public static bool won;
-    
+
     private float initialZ;
 
     void Start()
@@ -38,14 +37,14 @@ public class ItemDrag1 : MonoBehaviour
         }
 
         initialZ = transform.position.z;
-        
         timer = 0f;
-        won = false; 
+        won = false;
     }
 
     void OnMouseDown()
     {
         if (Camera.main == null) return;
+
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
     }
@@ -53,10 +52,10 @@ public class ItemDrag1 : MonoBehaviour
     void OnMouseDrag()
     {
         if (Camera.main == null) return;
+
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        
-        curPosition.z = initialZ; 
+        curPosition.z = initialZ;
         transform.position = curPosition;
     }
 
@@ -72,7 +71,7 @@ public class ItemDrag1 : MonoBehaviour
     void SnapTo(GameObject targetBox)
     {
         Vector3 targetPos = targetBox.transform.position;
-        targetPos.z = targetBox.transform.position.z - 1f; 
+        targetPos.z = targetBox.transform.position.z - 1f;
         transform.position = targetPos;
     }
 
@@ -82,7 +81,7 @@ public class ItemDrag1 : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D other)
-    {  
+    {
         SetTouchingState(other.gameObject, false);
     }
 
@@ -97,22 +96,27 @@ public class ItemDrag1 : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "SampleScene")
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Persist or destroy based on scene
+        if (currentSceneName == "SampleScene")
         {
             DontDestroyOnLoad(gameObject);
         }
-        else if (SceneManager.GetActiveScene().name != "SampleScene 1" && SceneManager.GetActiveScene().name != "SampleScene" && SceneManager.GetActiveScene().name != "PutthemBack")
+        else if (currentSceneName != "SampleScene 1" && currentSceneName != "SampleScene" && currentSceneName != "PutthemBack")
         {
-           Destroy(gameObject);
+            Destroy(gameObject);
+            return; // Exit Update immediately if destroyed
         }
-        string currentSceneName = SceneManager.GetActiveScene().name;
 
+        // Logic for the PutthemBack scene
         if (currentSceneName == "PutthemBack")
         {
-            timer += Time.deltaTime; 
-            
-            if (timer >= 5f)
+            timer += Time.deltaTime;
+
+            if (timer >= 5f && timer < 7f)
             {
+                // Check if the item returned to its exact original position
                 if (Vector2.Distance(transform.position, originalPosition) < 0.1f)
                 {
                     Debug.Log(gameObject.name + " WON");
@@ -123,15 +127,15 @@ public class ItemDrag1 : MonoBehaviour
                     Debug.Log(gameObject.name + " lost");
                     won = false;
                 }
-                if (timer >= 7f)
-                {
-                    // SYSTEM FIX: Clear the static state so the tracking works next time the game runs
-                    isPositionSaved = false; 
-                    
-                    SceneManager.LoadScene("thanks for playing");
-                    Destroy(gameObject); 
-                    enabled = false;
-                }
+            }
+            else if (timer >= 7f)
+            {
+                // SYSTEM FIX: Clear the static state so tracking works the next time the game runs
+                isPositionSaved = false;
+                
+                SceneManager.LoadScene("thanks for playing");
+                Destroy(gameObject);
+                enabled = false;
             }
         }
     }
