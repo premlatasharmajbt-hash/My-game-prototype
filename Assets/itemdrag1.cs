@@ -111,7 +111,7 @@ public class ItemDrag1 : MonoBehaviour
         {
             timer += Time.deltaTime; 
             
-            if (timer >= 10f)
+            if (timer >= 5f)
             {
                 if (Vector2.Distance(transform.position, originalPosition) < 0.1f)
                 {
@@ -123,7 +123,7 @@ public class ItemDrag1 : MonoBehaviour
                     Debug.Log(gameObject.name + " lost");
                     won = false;
                 }
-                if (timer >= 20f)
+                if (timer >= 7f)
                 {
                     // SYSTEM FIX: Clear the static state so the tracking works next time the game runs
                     isPositionSaved = false; 

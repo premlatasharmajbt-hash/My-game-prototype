@@ -11,7 +11,7 @@ public class YOuwonorlost : MonoBehaviour
     }
     void Update()
     {
-      if (ItemDrag.timer >= 10f)
+      if (ItemDrag.timer >= 5f)
       {
         if (ItemDrag.won == true)
         {
