@@ -97,6 +97,14 @@ public class ItemDrag1 : MonoBehaviour
 
     void Update()
     {
+        if (SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (SceneManager.GetActiveScene().name != "SampleScene 1" && SceneManager.GetActiveScene().name != "SampleScene" && SceneManager.GetActiveScene().name != "PutthemBack")
+        {
+           Destroy(gameObject);
+        }
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         if (currentSceneName == "PutthemBack")

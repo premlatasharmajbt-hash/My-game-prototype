@@ -30,6 +30,14 @@ public class ItemDrag : MonoBehaviour
 
     void Start()
     {
+       if (SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (SceneManager.GetActiveScene().name != "SampleScene 1" && SceneManager.GetActiveScene().name != "SampleScene" && SceneManager.GetActiveScene().name != "PutthemBack")
+        {
+           Destroy(gameObject);
+        }
         // Now this only runs the very first time the item is created in the first scene
         if (!isPositionSaved)
         {
@@ -97,6 +105,14 @@ public class ItemDrag : MonoBehaviour
 
     void Update()
     {
+        if (SceneManager.GetActiveScene().name == "SampleScene")
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (SceneManager.GetActiveScene().name != "SampleScene 1" && SceneManager.GetActiveScene().name != "SampleScene" && SceneManager.GetActiveScene().name != "PutthemBack")
+        {
+           Destroy(gameObject);
+        }
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         if (currentSceneName == "PutthemBack")
