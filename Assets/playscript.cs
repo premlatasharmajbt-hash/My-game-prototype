@@ -28,8 +28,14 @@ public class playscript : MonoBehaviour
             Box.SetActive(true);
             Exit.SetActive(true); 
             GameObject.SetActive(false);
-            Item2.SetActive(false);
-            Item1.SetActive(false);
+            if (GameObject.Find("Item1(Clone)") != null)
+            {
+                Destroy(GameObject.Find("Item1(Clone)"));
+            }
+            if (GameObject.Find("Item2(Clone)") != null)
+            {
+                Destroy(GameObject.Find("Item2(Clone)"));
+            }
         }
         if (GameObject.Find("Item1(Clone)") != null)
         {
