@@ -6,15 +6,20 @@ public class ItemDrag1 : MonoBehaviour
     private static Vector3 originalPosition;
     private static bool isPositionSaved = false;
 
+    // Safety gate variable to completely prevent Unity from freezing
+    private static bool isTransitioning = false; 
+
+    [Header("Drop Zones")]
+    public GameObject Dropbox;
     public GameObject Dropbox1;
     public GameObject Dropbox2;
     public GameObject Dropbox3;
     public GameObject Dropbox4;
-    public GameObject Dropbox;
 
     private Vector3 screenPoint;
     private Vector3 offset;
 
+    [Header("Trigger Status")]
     public bool touchingDropBox;
     public bool touchingDropBox1;
     public bool touchingDropBox2;
@@ -22,6 +27,7 @@ public class ItemDrag1 : MonoBehaviour
     public bool touchingDropBox4;
 
     public float timetosee = 10f;
+    
     public static float timer = 0f;
     public static bool won;
 
@@ -29,7 +35,6 @@ public class ItemDrag1 : MonoBehaviour
 
     void Start()
     {
-        // Now this only runs the very first time the item is created in the first scene
         if (!isPositionSaved)
         {
             originalPosition = transform.position;
@@ -37,14 +42,14 @@ public class ItemDrag1 : MonoBehaviour
         }
 
         initialZ = transform.position.z;
-        timer = 0f;
+        timer = 0f; 
         won = false;
+        isTransitioning = false; // Reset our safety lock on start
     }
 
     void OnMouseDown()
     {
         if (Camera.main == null) return;
-
         screenPoint = Camera.main.WorldToScreenPoint(gameObject.transform.position);
         offset = gameObject.transform.position - Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z));
     }
@@ -52,7 +57,6 @@ public class ItemDrag1 : MonoBehaviour
     void OnMouseDrag()
     {
         if (Camera.main == null) return;
-
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
         curPosition.z = initialZ;
@@ -98,7 +102,6 @@ public class ItemDrag1 : MonoBehaviour
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
 
-        // Persist or destroy based on scene
         if (currentSceneName == "SampleScene")
         {
             DontDestroyOnLoad(gameObject);
@@ -106,17 +109,18 @@ public class ItemDrag1 : MonoBehaviour
         else if (currentSceneName != "SampleScene 1" && currentSceneName != "SampleScene" && currentSceneName != "PutthemBack")
         {
             Destroy(gameObject);
-            return; // Exit Update immediately if destroyed
+            return; 
         }
 
-        // Logic for the PutthemBack scene
         if (currentSceneName == "PutthemBack")
         {
+            // Stop processing completely if another script already called the scene change
+            if (isTransitioning) return; 
+
             timer += Time.deltaTime;
 
             if (timer >= 5f && timer < 7f)
             {
-                // Check if the item returned to its exact original position
                 if (Vector2.Distance(transform.position, originalPosition) < 0.1f)
                 {
                     Debug.Log(gameObject.name + " WON");
@@ -130,12 +134,13 @@ public class ItemDrag1 : MonoBehaviour
             }
             else if (timer >= 7f)
             {
-                // SYSTEM FIX: Clear the static state so tracking works the next time the game runs
+                // CRITICAL SAFETY GATE: Lock this block so it runs exactly once globally
+                isTransitioning = true; 
                 isPositionSaved = false;
                 
+                Debug.Log("Safe transition initiated to final scene.");
                 SceneManager.LoadScene("thanks for playing");
                 Destroy(gameObject);
-                enabled = false;
             }
         }
     }
