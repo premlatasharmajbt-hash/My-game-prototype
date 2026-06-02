@@ -4,9 +4,9 @@ using UnityEngine.SceneManagement;
 public class ItemDrag : MonoBehaviour
 {
     private static Vector3 originalPosition;
-    
-    // SYSTEM FIX: Changed to static so the script remembers it already saved the position across scenes
-    private static bool isPositionSaved = false;
+    public static bool isPositionSaved = false;
+
+    // Safety gate shared by ALL drag scripts to prevent double-loading crashes
 
     public GameObject Dropbox1;
     public GameObject Dropbox2;
@@ -30,15 +30,6 @@ public class ItemDrag : MonoBehaviour
 
     void Start()
     {
-       if (SceneManager.GetActiveScene().name == "SampleScene")
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-        else if (SceneManager.GetActiveScene().name != "SampleScene 1" && SceneManager.GetActiveScene().name != "SampleScene" && SceneManager.GetActiveScene().name != "PutthemBack")
-        {
-           Destroy(gameObject);
-        }
-        // Now this only runs the very first time the item is created in the first scene
         if (!isPositionSaved)
         {
             originalPosition = transform.position;
@@ -46,7 +37,6 @@ public class ItemDrag : MonoBehaviour
         }
 
         initialZ = transform.position.z;
-        
         timer = 0f;
         won = false; 
     }
@@ -63,7 +53,6 @@ public class ItemDrag : MonoBehaviour
         if (Camera.main == null) return;
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        
         curPosition.z = initialZ; 
         transform.position = curPosition;
     }
@@ -105,15 +94,16 @@ public class ItemDrag : MonoBehaviour
 
     void Update()
     {
-        if (SceneManager.GetActiveScene().name == "SampleScene")
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        if (currentSceneName == "SampleScene")
         {
             DontDestroyOnLoad(gameObject);
         }
-        else if (SceneManager.GetActiveScene().name != "SampleScene 1" && SceneManager.GetActiveScene().name != "SampleScene" && SceneManager.GetActiveScene().name != "PutthemBack" && SceneManager.GetActiveScene().name != "thanks for playing")
+        else if (currentSceneName != "SampleScene 1" && currentSceneName != "SampleScene" && currentSceneName != "PutthemBack" && currentSceneName != "thanks for playing")
         {
            Destroy(gameObject);
         }
-        string currentSceneName = SceneManager.GetActiveScene().name;
 
         if (currentSceneName == "PutthemBack")
         {
@@ -124,21 +114,14 @@ public class ItemDrag : MonoBehaviour
                 if (Vector2.Distance(transform.position, originalPosition) < 0.1f)
                 {
                     Debug.Log(gameObject.name + " WON");
+                    YOuwonorlost.waitfor7();
                     won = true;
                 }
                 else
                 {
                     Debug.Log(gameObject.name + " lost");
+                    YOuwonorlost.waitfor7();
                     won = false;
-                }
-                if (timer >= 7f)
-                {
-                    // SYSTEM FIX: Clear the static state so the tracking works next time the game runs
-                    isPositionSaved = false; 
-                    
-                    SceneManager.LoadScene("thanks for playing");
-                    Destroy(gameObject); 
-                    enabled = false;
                 }
             }
         }

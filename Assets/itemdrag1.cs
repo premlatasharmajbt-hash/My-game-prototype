@@ -7,7 +7,6 @@ public class ItemDrag1 : MonoBehaviour
     private static bool isPositionSaved = false;
 
     // References the exact same safety lock variable to stay synchronized
-    private static bool isSceneLoading = false;
 
     public GameObject Dropbox1;
     public GameObject Dropbox2;
@@ -40,8 +39,7 @@ public class ItemDrag1 : MonoBehaviour
 
         initialZ = transform.position.z;
         Timer = 0f;
-        won = false; 
-        isSceneLoading = false; 
+        won = false;  
     }
 
     void OnMouseDown()
@@ -106,7 +104,6 @@ public class ItemDrag1 : MonoBehaviour
         else if (currentSceneName != "SampleScene 1" && currentSceneName != "SampleScene" && currentSceneName != "PutthemBack" && currentSceneName != "thanks for playing")
         {
            Destroy(gameObject);
-           return;
         }
 
         if (currentSceneName == "PutthemBack")
@@ -118,27 +115,16 @@ public class ItemDrag1 : MonoBehaviour
                 if (Vector2.Distance(transform.position, originalPosition) < 0.1f)
                 {
                     Debug.Log(gameObject.name + " WON");
+                    YOuwonorlost.waitfor7();
                     won = true;
                 }
                 else
                 {
                     Debug.Log(gameObject.name + " lost");
+                    YOuwonorlost.waitfor7();
                     won = false;
                 }
 
-                if (Timer >= 7f)
-                {
-                    isPositionSaved = false; 
-
-                    // SAFETY CHECK: Only change the scene if the other script hasn't done it yet
-                    if (!isSceneLoading)
-                    {
-                        isSceneLoading = true; // Lock the door
-                        SceneManager.LoadScene("thanks for playing");
-                    }
-                    
-                    Destroy(gameObject); 
-                }
             }
         }
     }
