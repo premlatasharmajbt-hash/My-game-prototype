@@ -21,7 +21,7 @@ public class teleportscript : MonoBehaviour
         if (other.gameObject == Player)
         {
             Scene currentScene = SceneManager.GetActiveScene();
-            if (currentScene.name == "SampleScene")
+            if (currentScene.name == "SampleScene 2")
             {
                 SceneManager.LoadScene("Level1");
             }

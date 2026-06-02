@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class playscript : MonoBehaviour
 {
@@ -22,20 +23,7 @@ public class playscript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space)) // Check if the space key is pressed
         {
-            Game.SetActive(true); 
-            Grid.SetActive(true); 
-            Player.SetActive(true); 
-            Box.SetActive(true);
-            Exit.SetActive(true); 
-            GameObject.SetActive(false);
-            if (GameObject.Find("Item1(Clone)") != null)
-            {
-                Destroy(GameObject.Find("Item1(Clone)"));
-            }
-            if (GameObject.Find("Item2(Clone)") != null)
-            {
-                Destroy(GameObject.Find("Item2(Clone)"));
-            }
+            SceneManager.LoadScene("SampleScene 1");
         }
         if (GameObject.Find("Item1(Clone)") != null)
         {
