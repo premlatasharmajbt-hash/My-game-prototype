@@ -117,7 +117,6 @@ MonoBehaviour:
   touchingDropBox3: 0
   touchingDropBox4: 0
   timetosee: 10
-  notagain: 0
 --- !u!61 &-8185499198006548782
 BoxCollider2D:
   m_ObjectHideFlags: 0
