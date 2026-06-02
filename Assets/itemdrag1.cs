@@ -6,31 +6,28 @@ public class ItemDrag1 : MonoBehaviour
     private static Vector3 originalPosition;
     private static bool isPositionSaved = false;
 
-    // Safety gate variable to completely prevent Unity from freezing
-    private static bool isTransitioning = false; 
+    // References the exact same safety lock variable to stay synchronized
+    private static bool isSceneLoading = false;
 
-    [Header("Drop Zones")]
-    public GameObject Dropbox;
     public GameObject Dropbox1;
     public GameObject Dropbox2;
     public GameObject Dropbox3;
     public GameObject Dropbox4;
-
+    public GameObject Dropbox;
     private Vector3 screenPoint;
     private Vector3 offset;
-
-    [Header("Trigger Status")]
+    
     public bool touchingDropBox;
     public bool touchingDropBox1;
     public bool touchingDropBox2;
     public bool touchingDropBox3;
     public bool touchingDropBox4;
-
     public float timetosee = 10f;
     
-    public static float timer = 0f;
+    // Unique timer and win state completely isolated to this item
+    private static float Timer = 0f; 
     public static bool won;
-
+    
     private float initialZ;
 
     void Start()
@@ -42,9 +39,9 @@ public class ItemDrag1 : MonoBehaviour
         }
 
         initialZ = transform.position.z;
-        timer = 0f; 
-        won = false;
-        isTransitioning = false; // Reset our safety lock on start
+        Timer = 0f;
+        won = false; 
+        isSceneLoading = false; 
     }
 
     void OnMouseDown()
@@ -59,7 +56,7 @@ public class ItemDrag1 : MonoBehaviour
         if (Camera.main == null) return;
         Vector3 curScreenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, screenPoint.z);
         Vector3 curPosition = Camera.main.ScreenToWorldPoint(curScreenPoint) + offset;
-        curPosition.z = initialZ;
+        curPosition.z = initialZ; 
         transform.position = curPosition;
     }
 
@@ -75,7 +72,7 @@ public class ItemDrag1 : MonoBehaviour
     void SnapTo(GameObject targetBox)
     {
         Vector3 targetPos = targetBox.transform.position;
-        targetPos.z = targetBox.transform.position.z - 1f;
+        targetPos.z = targetBox.transform.position.z - 1f; 
         transform.position = targetPos;
     }
 
@@ -85,7 +82,7 @@ public class ItemDrag1 : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D other)
-    {
+    {  
         SetTouchingState(other.gameObject, false);
     }
 
@@ -106,20 +103,17 @@ public class ItemDrag1 : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
         }
-        else if (currentSceneName != "SampleScene 1" && currentSceneName != "SampleScene" && currentSceneName != "PutthemBack")
+        else if (currentSceneName != "SampleScene 1" && currentSceneName != "SampleScene" && currentSceneName != "PutthemBack" && currentSceneName != "thanks for playing")
         {
-            Destroy(gameObject);
-            return; 
+           Destroy(gameObject);
+           return;
         }
 
         if (currentSceneName == "PutthemBack")
         {
-            // Stop processing completely if another script already called the scene change
-            if (isTransitioning) return; 
-
-            timer += Time.deltaTime;
-
-            if (timer >= 5f && timer < 7f)
+            Timer += Time.deltaTime; 
+            
+            if (Timer >= 5f)
             {
                 if (Vector2.Distance(transform.position, originalPosition) < 0.1f)
                 {
@@ -131,16 +125,20 @@ public class ItemDrag1 : MonoBehaviour
                     Debug.Log(gameObject.name + " lost");
                     won = false;
                 }
-            }
-            else if (timer >= 7f)
-            {
-                // CRITICAL SAFETY GATE: Lock this block so it runs exactly once globally
-                isTransitioning = true; 
-                isPositionSaved = false;
-                
-                Debug.Log("Safe transition initiated to final scene.");
-                SceneManager.LoadScene("thanks for playing");
-                Destroy(gameObject);
+
+                if (Timer >= 7f)
+                {
+                    isPositionSaved = false; 
+
+                    // SAFETY CHECK: Only change the scene if the other script hasn't done it yet
+                    if (!isSceneLoading)
+                    {
+                        isSceneLoading = true; // Lock the door
+                        SceneManager.LoadScene("thanks for playing");
+                    }
+                    
+                    Destroy(gameObject); 
+                }
             }
         }
     }
